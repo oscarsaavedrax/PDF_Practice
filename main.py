@@ -120,3 +120,5 @@ while menu_option != 3:
             
     print_menu()
     menu_option = int(input("Enter a menu option: "))
+    
+print("Closing application...\n\nThank you.")
