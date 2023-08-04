@@ -64,6 +64,43 @@ def combine():
 # Function to extract the POD paperwork from BOL
 def extract():
     print("\nEXTRACT PAGES")
+    
+    # Get load name from user
+    load_name = input("Enter the load name: ")
+    
+    # Create input file name
+    bol_file_name = CONFIG.PATH + f"{load_name} BOL.pdf"
+    
+    # Open the input file
+    bol = open(bol_file_name, "rb")
+    print(f"\nOpening bol page\n{bol_file_name.replace(CONFIG.PATH, '')}")
+    
+    # Prompt user for start and end page numbers
+    start_page =int(input("Enter the start page: "))
+    end_page = int(input("Enter the last page: "))
+    
+    # Create new pdf writer object
+    extractor = PdfWriter()
+    
+    # Extract the selected pages
+    extractor.append(fileobj=bol, pages=(start_page, end_page))
+    print(f"\nExtracting pages {start_page + 1} - {end_page + 1} from {bol_file_name.replace(CONFIG.PATH, '')}")
+    
+    # Create output file name
+    pod_file_name = bol_file_name.replace("BOL", "POD")
+    
+    # Open the output file
+    pod = open(pod_file_name, "wb")
+    print(f"\nOpening output file\n{pod_file_name.replace(CONFIG.PATH, '')}")
+    
+    # Write to new output file
+    extractor.write(pod)
+    print("\nWriting to output file...")
+    print("Done.")
+    
+    extractor.close()
+    pod.close()
+    bol.close()
 
 # -------------------------------- START -------------------------
 # Print starting prompt
